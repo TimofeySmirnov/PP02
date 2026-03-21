@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  SNACK
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum GoalType {
+  LOSE_WEIGHT
+  MAINTAIN
+  GAIN_WEIGHT
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  profile      Profile?
+  bodyMetrics  BodyMetric[]
+  meals        Meal[]
+  products     Product[]
+}
+
+model Profile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  displayName       String?
+  gender            Gender?
+  goal              GoalType?
+  age               Int?
+  heightCm          Float?
+  weightKg          Float?
+  dailyCalorieGoal  Int?
+  dailyProteinGoal  Int?
+  dailyCarbGoal     Int?
+  dailyFatGoal      Int?
+  dailyWaterGoalMl  Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Meal {
+  id           String      @id @default(cuid())
+  userId       String
+  name         String
+  mealType     MealType
+  loggedAt     DateTime
+  notes        String?
+  totalKcal    Int?        @default(0)
+  totalProtein Int?        @default(0)
+  totalCarbs   Int?        @default(0)
+  totalFat     Int?        @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entries      MealEntry[]
+
+  @@index([userId, loggedAt])
+  @@unique([userId, mealType, loggedAt])
+}
+
+model MealEntry {
+  id          String   @id @default(cuid())
+  mealId       String
+  productId    String?
+  foodName    String
+  grams       Float
+  servingSize String?
+  calories    Int?
+  protein     Int?
+  carbs       Int?
+  fat         Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  meal        Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([mealId])
+  @@index([productId])
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  name            String
+  caloriesPer100g Int
+  proteinPer100g  Int
+  carbsPer100g    Int
+  fatPer100g      Int
+  isCustom        Boolean     @default(false)
+  createdByUserId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  createdByUser   User?       @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+  entries         MealEntry[]
+
+  @@index([name])
+  @@index([createdByUserId])
+}
+
+model BodyMetric {
+  id                String   @id @default(cuid())
+  userId            String
+  loggedAt          DateTime
+  weightKg          Float
+  bodyFatPercent    Float?
+  waistCm           Float?
+  hipsCm            Float?
+  chestCm           Float?
+  targetCalories    Int?
+  targetProtein     Int?
+  targetFat         Int?
+  targetCarbs       Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, loggedAt])
+  @@unique([userId, loggedAt])
+}
