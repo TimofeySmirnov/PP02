@@ -4,7 +4,7 @@ import { LogoutForm } from "@/components/auth/logout-form";
 import { cn } from "@/lib/utils";
 
 const baseNavigationItems = [
-  { href: "/dashboard", label: "Дашборд" },
+  { href: "/", label: "Дашборд" },
   { href: "/analytics", label: "Показатели" },
   { href: "/meals", label: "Приемы пищи" },
   { href: "/profile", label: "Профиль" },
@@ -28,7 +28,7 @@ export function SidebarNav({ userName }: SidebarNavProps) {
     <aside className="rounded-[32px] border border-white/60 bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
       <div className="flex min-h-full flex-col">
         <div>
-          <p className="text-sm uppercase tracking-[0.24em] text-[var(--accent)]">Трекер питания</p>
+          <p className="text-sm uppercase tracking-[0.24em] text-[var(--accent)]">LifeSummary</p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight">Навигация</h2>
         </div>
 

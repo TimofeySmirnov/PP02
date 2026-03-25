@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Трекер питания",
+  title: "LifeSummary",
   description: "Базовый шаблон трекера питания на Next.js и Prisma.",
 };
 

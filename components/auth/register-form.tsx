@@ -11,7 +11,7 @@ type RegisterFormProps = {
   nextPath?: string;
 };
 
-export function RegisterForm({ nextPath = "/dashboard" }: RegisterFormProps) {
+export function RegisterForm({ nextPath = "/" }: RegisterFormProps) {
   const [state, formAction] = useActionState(registerAction, EMPTY_AUTH_STATE);
 
   return (

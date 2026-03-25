@@ -48,6 +48,7 @@ function normalizeApiProduct(product: OpenFoodFactsProduct): NormalizedProduct |
 
 export async function searchProductsFromOpenFoodFacts(query: string): Promise<NormalizedProduct[]> {
   const normalizedQuery = query.trim();
+  console.log('open api')
 
   if (!normalizedQuery) {
     return [];
@@ -66,7 +67,8 @@ export async function searchProductsFromOpenFoodFacts(query: string): Promise<No
   });
 
   if (!response.ok) {
-    throw new Error(`Open Food Facts request failed with status ${response.status}`);
+    //@ts-ignore
+    throw new Error(`Не удалось загрузить продукты. Статус ошибки ${response.status}`);
   }
 
   const data = (await response.json()) as {

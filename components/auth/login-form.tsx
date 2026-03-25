@@ -11,7 +11,7 @@ type LoginFormProps = {
   nextPath?: string;
 };
 
-export function LoginForm({ nextPath = "/dashboard" }: LoginFormProps) {
+export function LoginForm({ nextPath = "/" }: LoginFormProps) {
   const [state, formAction] = useActionState(loginAction, EMPTY_AUTH_STATE);
 
   return (

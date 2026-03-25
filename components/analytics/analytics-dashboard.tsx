@@ -111,6 +111,7 @@ export function AnalyticsDashboard({
                     stroke="#0f766e"
                     strokeWidth={3}
                     dot={false}
+                    connectNulls={true}
                   />
                   <Line
                     yAxisId="right"
@@ -120,6 +121,7 @@ export function AnalyticsDashboard({
                     stroke="#dd6b20"
                     strokeWidth={2}
                     dot={false}
+                    connectNulls={true}
                   />
                 </ComposedChart>
               </ResponsiveContainer>
