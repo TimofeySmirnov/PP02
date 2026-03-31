@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
+
+
 const SESSION_COOKIE_NAME = "lifesum_session";
 const AUTH_PAGES = ["/login", "/register"];
 const PRIVATE_PATHS = ["/dashboard", "/analytics", "/profile", "/meals"];
