@@ -7,10 +7,9 @@ COPY package.json package-lock.json* ./
 RUN npm install
 
 # prisma (ВАЖНО скопировать отдельно, чтобы не ломать кеш)
-COPY prisma ./prisma
 
-# генерация клиента
-RUN npx prisma generate
+
+
 
 # копируем остальной проект
 COPY . .
@@ -18,6 +17,10 @@ COPY . .
 # dev режим
 ENV NODE_ENV=development
 ENV SESSION_SECRET="practice-project-session-secret"
+ENV DATABASE_URL="postgresql://postgres:postgres@postgres:5432/app_db"
+
+# генерация клиента
+RUN npx prisma generate
 
 EXPOSE 3000
 
